@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { AuthResponse, PaysGatorConfig, WalletBalanceResponse } from './types';
+import { AuthResponse, PaysGatorConfig } from './types';
 import { PaymentLinks } from './resources/paymentLinks';
 import { Subscriptions } from './resources/subscriptions';
 import { Transactions } from './resources/transactions';
@@ -8,8 +8,8 @@ import { Wallet } from './resources/wallet';
 export class PaysGator {
     private client: AxiosInstance;
     private config: PaysGatorConfig;
-    private token: string | null = null;
     private baseUrl: string = 'https://paysgator.com'; // Default production
+    private token: string | null = null;
 
     public paymentLinks: PaymentLinks;
     public subscriptions: Subscriptions;
@@ -32,17 +32,7 @@ export class PaysGator {
     }
 
     /**
-     * Set a custom base URL (e.g. for testing)
-     */
-    public setBaseUrl(url: string) {
-        this.baseUrl = url;
-        this.client.defaults.baseURL = url;
-    }
-
-    /**
      * Authenticate and get an access token.
-     * This is usually called automatically if no token is present, 
-     * but can be called manually.
      */
     public async authenticate(): Promise<AuthResponse> {
         try {
@@ -58,16 +48,18 @@ export class PaysGator {
             throw error;
         }
     }
+    /**
+     * Set a custom base URL (e.g. for testing)
+     */
+    public setBaseUrl(url: string) {
+        this.baseUrl = url;
+        this.client.defaults.baseURL = url;
+    }
 
     /**
-     * Internal helper to make authenticated requests.
-     * Simple wrapper to ensure token might be refreshed if we had refresh logic, 
-     * but here we just ensure we have one or throw/re-auth.
+     * Internal helper to make requests.
      */
     public getClient(): AxiosInstance {
-        // For now, we rely on the user to ensure they assume authentication is handled
-        // or we could auto-authenticate on 401. 
-        // Given the spec, let's keep it simple: access the client.
         return this.client;
     }
 }

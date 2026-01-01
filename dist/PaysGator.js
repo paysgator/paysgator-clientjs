@@ -11,8 +11,8 @@ const transactions_1 = require("./resources/transactions");
 const wallet_1 = require("./resources/wallet");
 class PaysGator {
     constructor(config) {
-        this.token = null;
         this.baseUrl = 'https://paysgator.com'; // Default production
+        this.token = null;
         this.config = config;
         this.client = axios_1.default.create({
             baseURL: this.baseUrl,
@@ -26,16 +26,7 @@ class PaysGator {
         this.wallet = new wallet_1.Wallet(this);
     }
     /**
-     * Set a custom base URL (e.g. for testing)
-     */
-    setBaseUrl(url) {
-        this.baseUrl = url;
-        this.client.defaults.baseURL = url;
-    }
-    /**
      * Authenticate and get an access token.
-     * This is usually called automatically if no token is present,
-     * but can be called manually.
      */
     async authenticate() {
         try {
@@ -52,14 +43,16 @@ class PaysGator {
         }
     }
     /**
-     * Internal helper to make authenticated requests.
-     * Simple wrapper to ensure token might be refreshed if we had refresh logic,
-     * but here we just ensure we have one or throw/re-auth.
+     * Set a custom base URL (e.g. for testing)
+     */
+    setBaseUrl(url) {
+        this.baseUrl = url;
+        this.client.defaults.baseURL = url;
+    }
+    /**
+     * Internal helper to make requests.
      */
     getClient() {
-        // For now, we rely on the user to ensure they assume authentication is handled
-        // or we could auto-authenticate on 401. 
-        // Given the spec, let's keep it simple: access the client.
         return this.client;
     }
 }

@@ -7,27 +7,23 @@ import { Wallet } from './resources/wallet';
 export declare class PaysGator {
     private client;
     private config;
-    private token;
     private baseUrl;
+    private token;
     paymentLinks: PaymentLinks;
     subscriptions: Subscriptions;
     transactions: Transactions;
     wallet: Wallet;
     constructor(config: PaysGatorConfig);
     /**
+     * Authenticate and get an access token.
+     */
+    authenticate(): Promise<AuthResponse>;
+    /**
      * Set a custom base URL (e.g. for testing)
      */
     setBaseUrl(url: string): void;
     /**
-     * Authenticate and get an access token.
-     * This is usually called automatically if no token is present,
-     * but can be called manually.
-     */
-    authenticate(): Promise<AuthResponse>;
-    /**
-     * Internal helper to make authenticated requests.
-     * Simple wrapper to ensure token might be refreshed if we had refresh logic,
-     * but here we just ensure we have one or throw/re-auth.
+     * Internal helper to make requests.
      */
     getClient(): AxiosInstance;
 }

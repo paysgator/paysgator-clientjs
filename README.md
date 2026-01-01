@@ -36,6 +36,14 @@ const client = new PaysGator({
 
 ## Usage
 
+### Authentication
+
+You must authenticate to validade your credentials and generate an access token before making other requests.
+
+```javascript
+await client.authenticate();
+```
+
 ### Create Payment Link
 
 ```javascript
@@ -44,7 +52,8 @@ const link = await client.paymentLinks.create({
   amount: 100,
   currency: 'MZN',
   description: 'Test payment',
-  methods: ['MPESA', 'CARD']
+  methods: ['MPESA', 'CARD'],
+  payment_fields: { phoneNumber: '841234567' } // Optional: for direct charges
 });
 
 console.log('Payment created:', link.url);
