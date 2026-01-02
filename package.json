@@ -1,6 +1,6 @@
 {
   "name": "paysgator-clientjs",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "PaysGator API Client for Node.js",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -27,5 +27,13 @@
   "devDependencies": {
     "typescript": "^5.0.0",
     "@types/node": "^20.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/paysgator/paysgator-clientjs.git"
+  },
+  "homepage": "https://github.com/paysgator/paysgator-clientjs#readme",
+  "bugs": {
+    "url": "https://github.com/paysgator/paysgator-clientjs/issues"
   }
 }
