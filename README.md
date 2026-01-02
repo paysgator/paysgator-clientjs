@@ -1,4 +1,4 @@
-# @paysgator/clientjs
+# PaysGator Client for Node.js
 
 Official JavaScript/TypeScript client library for the PaysGator API.
 
@@ -7,7 +7,7 @@ Official JavaScript/TypeScript client library for the PaysGator API.
 Install the package using npm:
 
 ```bash
-npm install @paysgator/clientjs
+npm install paysgator-clientjs
 ```
 
 ## Configuration
@@ -15,7 +15,7 @@ npm install @paysgator/clientjs
 Import and configure the client with your credentials:
 
 ```javascript
-const { PaysGator } = require('@paysgator/clientjs');
+const { PaysGator } = require('paysgator-clientjs');
 
 const client = new PaysGator({
   apiKey: 'YOUR_API_KEY',
@@ -26,7 +26,7 @@ const client = new PaysGator({
 For TypeScript/ES Modules:
 
 ```typescript
-import { PaysGator } from '@paysgator/clientjs';
+import { PaysGator } from 'paysgator-clientjs';
 
 const client = new PaysGator({
   apiKey: 'YOUR_API_KEY',

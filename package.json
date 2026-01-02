@@ -1,6 +1,6 @@
 {
-  "name": "@paysgator/clientjs",
-  "version": "1.0.0",
+  "name": "paysgator-clientjs",
+  "version": "1.0.1",
   "description": "PaysGator API Client for Node.js",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
