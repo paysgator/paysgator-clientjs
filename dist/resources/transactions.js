@@ -6,12 +6,12 @@ class Transactions {
         this.paysGator = paysGator;
     }
     /**
-     * Get Transaction Details
+     * Get a transaction by ID
      * @param id Transaction ID
      */
     async get(id) {
         const client = this.paysGator.getClient();
-        const response = await client.get(`/api/v1/transactions/${id}`);
+        const response = await client.get(`/transactions/${id}`);
         return response.data;
     }
 }

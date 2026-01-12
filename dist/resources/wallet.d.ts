@@ -4,7 +4,7 @@ export declare class Wallet {
     private paysGator;
     constructor(paysGator: PaysGator);
     /**
-     * Get Wallet Balance
+     * Get wallet balance
      */
     getBalance(): Promise<WalletBalanceResponse>;
 }

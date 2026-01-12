@@ -1,5 +1,5 @@
 import { PaysGator } from '../PaysGator';
-import { TransactionResponse } from '../types';
+import { Transaction } from '../types';
 
 export class Transactions {
     private paysGator: PaysGator;
@@ -9,12 +9,12 @@ export class Transactions {
     }
 
     /**
-     * Get Transaction Details
+     * Get a transaction by ID
      * @param id Transaction ID
      */
-    public async get(id: string): Promise<TransactionResponse> {
+    public async get(id: string): Promise<Transaction> {
         const client = this.paysGator.getClient();
-        const response = await client.get<TransactionResponse>(`/api/v1/transactions/${id}`);
+        const response = await client.get<Transaction>(`/transactions/${id}`);
         return response.data;
     }
 }

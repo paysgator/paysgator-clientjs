@@ -6,14 +6,13 @@ class Subscriptions {
         this.paysGator = paysGator;
     }
     /**
-     * Update Subscription Status
+     * Update subscription status
      * @param id Subscription ID
-     * @param action Action to perform (cancel, pause, resume)
+     * @param action Action to perform: 'cancel', 'pause', 'resume'
      */
     async update(id, action) {
-        const data = { action };
         const client = this.paysGator.getClient();
-        const response = await client.patch(`/api/v1/subscriptions/${id}`, data);
+        const response = await client.patch(`/subscriptions/${id}`, { action });
         return response.data;
     }
 }

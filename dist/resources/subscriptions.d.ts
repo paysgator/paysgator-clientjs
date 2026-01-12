@@ -1,12 +1,12 @@
 import { PaysGator } from '../PaysGator';
-import { SubscriptionResponse } from '../types';
+import { SubscriptionUpdateRequest, SubscriptionUpdateResponse } from '../types';
 export declare class Subscriptions {
     private paysGator;
     constructor(paysGator: PaysGator);
     /**
-     * Update Subscription Status
+     * Update subscription status
      * @param id Subscription ID
-     * @param action Action to perform (cancel, pause, resume)
+     * @param action Action to perform: 'cancel', 'pause', 'resume'
      */
-    update(id: string, action: 'cancel' | 'pause' | 'resume'): Promise<SubscriptionResponse>;
+    update(id: string, action: SubscriptionUpdateRequest['action']): Promise<SubscriptionUpdateResponse>;
 }

@@ -18,8 +18,7 @@ Import and configure the client with your credentials:
 const { PaysGator } = require('paysgator-clientjs');
 
 const client = new PaysGator({
-  apiKey: 'YOUR_API_KEY',
-  walletId: 'YOUR_WALLET_ID'
+  apiKey: 'YOUR_API_KEY'
 });
 ```
 
@@ -29,34 +28,38 @@ For TypeScript/ES Modules:
 import { PaysGator } from 'paysgator-clientjs';
 
 const client = new PaysGator({
-  apiKey: 'YOUR_API_KEY',
-  walletId: 'YOUR_WALLET_ID'
+  apiKey: 'YOUR_API_KEY'
 });
 ```
 
 ## Usage
 
-### Authentication
-
-You must authenticate to validade your credentials and generate an access token before making other requests.
+### Create Payment
 
 ```javascript
-await client.authenticate();
-```
-
-### Create Payment Link
-
-```javascript
-const link = await client.paymentLinks.create({
-  title: 'My Product',
+const payment = await client.payments.create({
   amount: 100,
-  currency: 'MZN',
-  description: 'Test payment',
-  methods: ['MPESA', 'CARD'],
-  payment_fields: { phoneNumber: '841234567' } // Optional: for direct charges
+  currency: 'MZN', // or USD, AOA
+  payment_methods: ['MPESA', 'CARD'],
+  returnUrl: 'https://example.com/callback'
 });
 
-console.log('Payment created:', link.url);
+console.log('Payment Link:', payment.checkoutUrl);
+console.log('Transaction ID:', payment.transactionId);
+```
+
+### Confirm Payment (Server-side)
+
+```javascript
+const confirmation = await client.payments.confirm({
+  paymentLinkId: 'payment_link_id',
+  paymentMethod: 'MPESA',
+  payment_fields: {
+      phoneNumber: '841234567' 
+  }
+});
+
+console.log('Payment Confirmed:', confirmation.transactionId);
 ```
 
 ### Check Balance

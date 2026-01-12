@@ -1,5 +1,5 @@
 import { PaysGator } from '../PaysGator';
-import { SubscriptionResponse, SubscriptionUpdateRequest } from '../types';
+import { SubscriptionUpdateRequest, SubscriptionUpdateResponse } from '../types';
 
 export class Subscriptions {
     private paysGator: PaysGator;
@@ -9,14 +9,13 @@ export class Subscriptions {
     }
 
     /**
-     * Update Subscription Status
+     * Update subscription status
      * @param id Subscription ID
-     * @param action Action to perform (cancel, pause, resume)
+     * @param action Action to perform: 'cancel', 'pause', 'resume'
      */
-    public async update(id: string, action: 'cancel' | 'pause' | 'resume'): Promise<SubscriptionResponse> {
-        const data: SubscriptionUpdateRequest = { action };
+    public async update(id: string, action: SubscriptionUpdateRequest['action']): Promise<SubscriptionUpdateResponse> {
         const client = this.paysGator.getClient();
-        const response = await client.patch<SubscriptionResponse>(`/api/v1/subscriptions/${id}`, data);
+        const response = await client.patch<SubscriptionUpdateResponse>(`/subscriptions/${id}`, { action });
         return response.data;
     }
 }

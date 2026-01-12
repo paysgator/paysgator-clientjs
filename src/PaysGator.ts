@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
-import { AuthResponse, PaysGatorConfig } from './types';
-import { PaymentLinks } from './resources/paymentLinks';
+import { PaysGatorConfig } from './types';
+import { Payments } from './resources/payments';
 import { Subscriptions } from './resources/subscriptions';
 import { Transactions } from './resources/transactions';
 import { Wallet } from './resources/wallet';
@@ -8,10 +8,9 @@ import { Wallet } from './resources/wallet';
 export class PaysGator {
     private client: AxiosInstance;
     private config: PaysGatorConfig;
-    private baseUrl: string = 'https://paysgator.com'; // Default production
-    private token: string | null = null;
+    private baseUrl: string = 'https://paysgator.com/api/v1';
 
-    public paymentLinks: PaymentLinks;
+    public payments: Payments;
     public subscriptions: Subscriptions;
     public transactions: Transactions;
     public wallet: Wallet;
@@ -22,32 +21,16 @@ export class PaysGator {
             baseURL: this.baseUrl,
             headers: {
                 'Content-Type': 'application/json',
+                'X-Api-Key': this.config.apiKey,
             },
         });
 
-        this.paymentLinks = new PaymentLinks(this);
+        this.payments = new Payments(this);
         this.subscriptions = new Subscriptions(this);
         this.transactions = new Transactions(this);
         this.wallet = new Wallet(this);
     }
 
-    /**
-     * Authenticate and get an access token.
-     */
-    public async authenticate(): Promise<AuthResponse> {
-        try {
-            const response = await this.client.post<AuthResponse>('/api/v1/auth', {
-                apiKey: this.config.apiKey,
-                walletId: this.config.walletId,
-            });
-
-            this.token = response.data.accessToken;
-            this.client.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;
-            return response.data;
-        } catch (error) {
-            throw error;
-        }
-    }
     /**
      * Set a custom base URL (e.g. for testing)
      */

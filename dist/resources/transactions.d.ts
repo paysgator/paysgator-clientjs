@@ -1,11 +1,11 @@
 import { PaysGator } from '../PaysGator';
-import { TransactionResponse } from '../types';
+import { Transaction } from '../types';
 export declare class Transactions {
     private paysGator;
     constructor(paysGator: PaysGator);
     /**
-     * Get Transaction Details
+     * Get a transaction by ID
      * @param id Transaction ID
      */
-    get(id: string): Promise<TransactionResponse>;
+    get(id: string): Promise<Transaction>;
 }

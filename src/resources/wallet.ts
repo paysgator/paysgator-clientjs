@@ -9,11 +9,11 @@ export class Wallet {
     }
 
     /**
-     * Get Wallet Balance
+     * Get wallet balance
      */
     public async getBalance(): Promise<WalletBalanceResponse> {
         const client = this.paysGator.getClient();
-        const response = await client.get<WalletBalanceResponse>('/api/v1/wallet/balance');
+        const response = await client.get<WalletBalanceResponse>('/wallet/balance');
         return response.data;
     }
 }

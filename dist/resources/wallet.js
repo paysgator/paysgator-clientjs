@@ -6,11 +6,11 @@ class Wallet {
         this.paysGator = paysGator;
     }
     /**
-     * Get Wallet Balance
+     * Get wallet balance
      */
     async getBalance() {
         const client = this.paysGator.getClient();
-        const response = await client.get('/api/v1/wallet/balance');
+        const response = await client.get('/wallet/balance');
         return response.data;
     }
 }

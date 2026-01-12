@@ -1,66 +1,81 @@
 export interface PaysGatorConfig {
   apiKey: string;
-  walletId: string;
-  sandbox?: boolean; // Defaults to false, but spec implies "mode" in response could test?
+  debug?: boolean; // Optional for debugging
 }
 
-export interface AuthRequest {
-  apiKey: string;
-  walletId: string;
+export interface ErrorResponse {
+  error: {
+    message: string;
+    code: 'UNAUTHORIZED' | 'NOT_FOUND' | 'MISSING_FIELDS' | 'WALLET_NOT_FOUND' | 'CURRENCY_MISMATCH' | 'PAYMENT_FAILED' | 'INTERNAL_ERROR' | 'INVALID_ACTION' | 'MODE_MISMATCH';
+  };
 }
 
-export interface AuthResponse {
-  accessToken: string;
-  expiresIn: number;
-  mode: 'LIVE' | 'TEST';
-}
-
-
-
-export interface PaymentLinkCreateRequest {
-  title: string;
+export interface PaymentCreateRequest {
   amount: number;
   currency: string;
-  description?: string;
+  externalTransactionId?: string;
+  payment_methods?: string[];
+  fields?: ('name' | 'email' | 'phone' | 'address')[];
   returnUrl?: string;
-  fields?: string[];
-  methods?: string[];
-  confirm?: boolean;
+  metadata?: Record<string, any>;
+}
+
+export interface PaymentCreateResponse {
+  success: boolean;
+  data: {
+    paymentlinkId: string;
+    checkoutUrl: string;
+    transactionId: string;
+  };
+}
+
+export interface PaymentConfirmRequest {
+  paymentLinkId: string;
+  paymentMethod: string;
   payment_fields?: Record<string, any>;
+  customer?: {
+    name?: string;
+    email?: string;
+    phone?: string;
+    address?: string;
+    country?: string;
+  };
 }
 
-export interface PaymentLinkResponse {
-  id: string;
-  url: string;
-  status: string;
-  mode: string;
-}
-
-export interface SubscriptionUpdateRequest {
-  action: 'cancel' | 'pause' | 'resume';
-}
-
-export interface SubscriptionResponse {
-  id: string;
-  status: string;
-  customerEmail?: string;
-  currentPeriodEnd?: string;
-}
-
-export interface TransactionResponse {
-  id: string;
-  amount: number;
-  currency: string;
-  status: string;
-  method?: string;
-  description?: string;
-  createdAt?: string;
-  mode?: string;
+export interface PaymentConfirmResponse {
+  success: boolean;
+  data: {
+    transactionId: string;
+    fee: number;
+    netAmount: number;
+  };
 }
 
 export interface WalletBalanceResponse {
   walletId: string;
   currency: string;
   balance: string;
-  mode: string;
+  mode: 'LIVE' | 'TEST';
+}
+
+export interface Transaction {
+  id: string;
+  amount: number;
+  currency: string;
+  status: 'PENDING' | 'SUCCESS' | 'FAILED' | 'REFUNDED';
+  method?: string | null;
+  description?: string | null;
+  createdAt: string;
+  mode: 'LIVE' | 'TEST';
+}
+
+export interface SubscriptionUpdateRequest {
+  action: 'cancel' | 'pause' | 'resume';
+}
+
+export interface SubscriptionUpdateResponse {
+  id: string;
+  status: 'ACTIVE' | 'CANCELED' | 'PAST_DUE' | 'PAUSED';
+  customerEmail?: string;
+  currentPeriodEnd?: string;
 }
