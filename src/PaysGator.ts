@@ -1,4 +1,9 @@
 import axios, { AxiosInstance } from 'axios';
+
+export interface PaysGatorClient {
+    getClient(): AxiosInstance;
+    setBaseUrl(url: string): void;
+}
 import { PaysGatorConfig } from './types';
 import { Payments } from './resources/payments';
 import { Subscriptions } from './resources/subscriptions';
@@ -25,10 +30,10 @@ export class PaysGator {
             },
         });
 
-        this.payments = new Payments(this);
-        this.subscriptions = new Subscriptions(this);
-        this.transactions = new Transactions(this);
-        this.wallet = new Wallet(this);
+        this.payments = new Payments(this as PaysGatorClient);
+        this.subscriptions = new Subscriptions(this as PaysGatorClient);
+        this.transactions = new Transactions(this as PaysGatorClient);
+        this.wallet = new Wallet(this as PaysGatorClient);
     }
 
     /**
@@ -42,7 +47,7 @@ export class PaysGator {
     /**
      * Internal helper to make requests.
      */
-    public getClient(): AxiosInstance {
+    private getClient(): AxiosInstance {
         return this.client;
     }
 }

@@ -37,7 +37,7 @@ export interface PaymentConfirmRequest {
     name?: string;
     email?: string;
     phone?: string;
-    address?: string;
+    address?: { street?: string; city?: string; state?: string; postalCode?: string; country?: string; };
     country?: string;
   };
 }
@@ -54,7 +54,7 @@ export interface PaymentConfirmResponse {
 export interface WalletBalanceResponse {
   walletId: string;
   currency: string;
-  balance: string;
+  balance: number;
   mode: 'LIVE' | 'TEST';
 }
 
@@ -63,7 +63,7 @@ export interface Transaction {
   amount: number;
   currency: string;
   status: 'PENDING' | 'SUCCESS' | 'FAILED' | 'REFUNDED';
-  method?: string | null;
+  method?: string;
   description?: string | null;
   createdAt: string;
   mode: 'LIVE' | 'TEST';
