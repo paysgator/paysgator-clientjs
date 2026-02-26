@@ -1,4 +1,4 @@
-import { PaysGator } from '../PaysGator';
+import PaysGator from '../PaysGator';
 import { PaymentCreateRequest, PaymentCreateResponse, PaymentConfirmRequest, PaymentConfirmResponse } from '../types';
 
 export class Payments {
@@ -13,7 +13,7 @@ export class Payments {
      * @param data Payment creation data
      */
     public async create(data: PaymentCreateRequest): Promise<PaymentCreateResponse> {
-        const client = this.paysGator.getClient();
+        const client = this.paysGator.getClient(); // TODO: Refactor to remove direct client exposure
         const response = await client.post<PaymentCreateResponse>('/payment/create', data);
         return response.data;
     }
@@ -23,7 +23,7 @@ export class Payments {
      * @param data Payment confirmation data
      */
     public async confirm(data: PaymentConfirmRequest): Promise<PaymentConfirmResponse> {
-        const client = this.paysGator.getClient();
+        const client = this.paysGator.getClient(); // TODO: Refactor to remove direct client exposure
         const response = await client.post<PaymentConfirmResponse>('/payment/confirm', data);
         return response.data;
     }
